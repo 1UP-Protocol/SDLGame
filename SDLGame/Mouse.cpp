@@ -9,10 +9,14 @@ void MouseEvents::getMousePosition()
 {
 	SDL_GetMouseState(&xMousePosition, &yMousePosition);
 }
-
+float xSpeed;
+float ySpeed;
+float speed;
 void MouseEvents::moveAwayFromMouse(SDL_Rect& targetRectangle, int centerX, int centerY)
 {
+	
 	// First, we determine in which quadrant the cursor is ========================================
+	
 	// Quadrant I
 	if (xMousePosition > centerX && yMousePosition < centerY)
 	{
@@ -22,6 +26,20 @@ void MouseEvents::moveAwayFromMouse(SDL_Rect& targetRectangle, int centerX, int 
 		angleTheta = getAngleTheta(distance, oppositeSide);
 		// Creates an angle that goes the opposite direction, angle is now in Quadrant III
 		invertedAngleTheta = angleTheta + pi;
+
+		// Square will only move if distance is less than 80
+		if (distance <= 150)
+		{
+			// Creates a speed that depends on how far/close the cursor is to the center
+			speed = (1 / (.5 * distance)) * 80;
+			xSpeed = -(speed * cos(invertedAngleTheta - pi));
+			ySpeed = speed * sin(invertedAngleTheta - pi);
+		}
+		else
+		{
+			xSpeed = 0;
+			ySpeed = 0;
+		}
 	}
 
 	// Quadrant II
@@ -33,6 +51,20 @@ void MouseEvents::moveAwayFromMouse(SDL_Rect& targetRectangle, int centerX, int 
 		angleTheta = (getAngleTheta(distance, oppositeSide)  + pi/2);
 		// Creates an angle that goes the opposite direction, angle is now in Quadrant IV
 		invertedAngleTheta = angleTheta + pi;
+
+		if (distance <= 150)
+		{
+			// Creates a speed that depends on how far/close the cursor is to the center
+			speed = (1 / (.5 * distance)) * 80;
+			// Apply opposite quadrant stuff
+			xSpeed = speed * sin(invertedAngleTheta - (3 * pi) / 2);
+			ySpeed = (speed * cos(invertedAngleTheta - (3 * pi) / 2));
+		}
+		else
+		{
+			xSpeed = 0;
+			ySpeed = 0;
+		}
 	}
 
 	// Quadrant III
@@ -44,6 +76,20 @@ void MouseEvents::moveAwayFromMouse(SDL_Rect& targetRectangle, int centerX, int 
 		angleTheta = (getAngleTheta(distance, oppositeSide) + pi);
 		// Creates an angle that goes the opposite direction, angle is now in Quadrant I
 		invertedAngleTheta = angleTheta - pi;
+
+		if (distance <= 150)
+		{
+			// Creates a speed that depends on how far/close the cursor is to the center
+			speed = (1 / (.5 * distance)) * 80;
+
+			xSpeed = speed * cos(invertedAngleTheta);
+			ySpeed = -(speed * sin(invertedAngleTheta));
+		}
+		else
+		{
+			xSpeed = 0;
+			ySpeed = 0;
+		}
 	}
 
 	// Quadrant IV
@@ -55,10 +101,28 @@ void MouseEvents::moveAwayFromMouse(SDL_Rect& targetRectangle, int centerX, int 
 		angleTheta = (getAngleTheta(distance, oppositeSide) + (3*pi)/2);
 		// Creates an angle that goes the opposite direction, angle is now in Quadrant II
 		invertedAngleTheta = angleTheta - pi;
+
+		if (distance <= 150)
+		{
+			// Creates a speed that depends on how far/close the cursor is to the center
+			speed = (1 / (.5 * distance)) * 80;
+			xSpeed = -speed * sin(invertedAngleTheta - pi / 2);
+			ySpeed = -(speed * cos(invertedAngleTheta - pi / 2));
+		}
+		else
+		{
+			xSpeed = 0;
+			ySpeed = 0;
+		}
 	}
 
-	printf("The distance is: %f, and the angle from the center is: %f degrees", distance, angleTheta);
-	printf(" | The opposite angle is %f\n", invertedAngleTheta);
+	printf("Distance: %f, Angle: %f rad", distance, angleTheta);
+	printf(" | The opposite angle: %f | ", invertedAngleTheta);
+	printf("The speed: %f | ", speed);
+	printf("x: %f, y: %f\n", xSpeed, ySpeed);
+	// Move the Rectangle
+	targetRectangle.x += xSpeed;
+	targetRectangle.y += ySpeed;
 }
 
 float MouseEvents::getDistanceMouseToCenter(float targetX, float targetY)

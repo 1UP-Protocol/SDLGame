@@ -22,7 +22,7 @@ private:
 	int xMousePosition;
 	int yMousePosition;
 
-	// Trig shit =+-=+-=+-=+-=+-=+-=+-=+-=+-=+-=+-=+-=+-
+	// Trig stuff =+-=+-=+-=+-=+-=+-=+-=+-=+-=+-=+-=+-=+-
 	
 	// The opposite side relative to theta on a right triangle 
 	float oppositeSide;
