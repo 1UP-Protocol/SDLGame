@@ -16,6 +16,7 @@ void quit();
 bool init();
 void movingDVD(SDL_Rect& rectangle);
 void rectMouseMovement(SDL_Rect& targetRectangle, int xMousePos, int yMousePos);
+void setBorder(SDL_Rect& targetRect);
 int main(int args, char* argv[]) {
 
 	SDL_Event e;
@@ -51,7 +52,9 @@ int main(int args, char* argv[]) {
 			// Update Shit here lol---------------------------------------------------
 			
 			mouse.getMousePosition();
+			
 			mouse.moveAwayFromMouse(rectangle, rectangle.x + (rectangle.w / 2), rectangle.y + (rectangle.h / 2));
+			setBorder(rectangle);
 			// rectMouseMovement(rectangle, mouse.getMouseX() , mouse.getMouseY());
 		}
 		// End Main Game Loop
@@ -127,10 +130,18 @@ void rectMouseMovement(SDL_Rect& targetRectangle, int xMousePos, int yMousePos)
 
 	// Bottom \/
 	if ((yMousePos - (targetRectangle.y + targetRectangle.h)) < distanceLimit && (yMousePos - (targetRectangle.y + targetRectangle.h) > 0 && (targetRectangle.x < xMousePos && targetRectangle.x + targetRectangle.w > xMousePos)))
-		targetRectangle.y -= moveSpeedDVD;
+		targetRectangle.y -= moveSpeedDVD;	
+	
+}
 
-	
-	
-		
-	
+void setBorder(SDL_Rect& targetRect)
+{
+	if (targetRect.x <= 0)
+		targetRect.x = 0;
+	if (targetRect.y <= 0)
+		targetRect.y = 0;
+	if (targetRect.x + targetRect.w >= screenWidth)
+		targetRect.x = screenWidth - targetRect.w;
+	if (targetRect.y + targetRect.h >= screenHeight)
+		targetRect.y = screenHeight - targetRect.h;
 }
