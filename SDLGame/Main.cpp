@@ -4,6 +4,7 @@
 #include "RenderWindow.h"
 #include "Texture.h"
 #include "Mouse.h"
+#include <cmath>
 
 const int screenWidth = 720;
 const int screenHeight = 600;
@@ -17,6 +18,8 @@ bool init();
 void movingDVD(SDL_Rect& rectangle);
 void rectMouseMovement(SDL_Rect& targetRectangle, int xMousePos, int yMousePos);
 void setBorder(SDL_Rect& targetRect);
+void drawCircleAroundPoint(int centerX, int centerY, int radius);
+
 int main(int args, char* argv[]) {
 
 	SDL_Event e;
@@ -46,6 +49,15 @@ int main(int args, char* argv[]) {
 			// Geometry End here ================================================
 
 			heart.renderTexture(gWindow.getRenderer());
+			
+			// Draw a dot
+			SDL_SetRenderDrawColor(gWindow.getRenderer(), 255, 0, 0, 255);
+			SDL_RenderDrawPoint(gWindow.getRenderer(), rectangle.x + (rectangle.w / 2), rectangle.y + (rectangle.h / 2));
+			
+
+			drawCircleAroundPoint(rectangle.x + (rectangle.w / 2), rectangle.y + (rectangle.h / 2), 150);
+			drawCircleAroundPoint(rectangle.x + (rectangle.w / 2), rectangle.y + (rectangle.h / 2), 5);
+			// Display Screen THIS GOES LAST SO EVERYTHING THAT SHOULD BE RENDERED ON SCREEN GOES ON TOP OF THIS!!11!!!!
 			gWindow.setColor(0, 0, 0, 255);
 			gWindow.Present();
 
@@ -53,7 +65,7 @@ int main(int args, char* argv[]) {
 			
 			mouse.getMousePosition();
 			
-			mouse.moveAwayFromMouse(rectangle, rectangle.x + (rectangle.w / 2), rectangle.y + (rectangle.h / 2));
+			mouse.moveAwayFromMouse(rectangle, static_cast<float>(rectangle.x) + (rectangle.w / 2.0f), static_cast<float>(rectangle.y) + (rectangle.h / 2.0f));
 			setBorder(rectangle);
 			// rectMouseMovement(rectangle, mouse.getMouseX() , mouse.getMouseY());
 		}
@@ -144,4 +156,21 @@ void setBorder(SDL_Rect& targetRect)
 		targetRect.x = screenWidth - targetRect.w;
 	if (targetRect.y + targetRect.h >= screenHeight)
 		targetRect.y = screenHeight - targetRect.h;
+}
+
+// Draws a circle around a point lol
+void drawCircleAroundPoint(int centerX, int centerY, int radius)
+{
+	
+	int radiusSquared = pow(radius, 2);
+	int y;
+	// Draw a circle
+	for (int x = -radius; x != radius; x++)
+	{
+		y = sqrt(radiusSquared - pow(x, 2));
+		SDL_RenderDrawPoint(gWindow.getRenderer(), centerX - x, centerY - y);
+		SDL_RenderDrawPoint(gWindow.getRenderer(), centerX - x, centerY + y);
+		
+	}
+	
 }

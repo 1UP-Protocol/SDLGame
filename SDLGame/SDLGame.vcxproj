@@ -142,12 +142,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FpsTimer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="RenderWindow.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FpsTimer.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="RenderWindow.h" />
     <ClInclude Include="Texture.h" />
