@@ -32,7 +32,7 @@ void MouseEvents::moveAwayFromMouse(SDL_Rect& targetRectangle, int centerX, int 
 		if (distance <= 150)
 		{
 			// Creates a speed that depends on how far/close the cursor is to the center
-			speed = (1 / (.5 * distance)) * multiplier;
+			speed = (1 / (pow(distance, 2))) * multiplier;
 
 			xSpeed = -(speed * cos(invertedAngleTheta - pi));
 			ySpeed = speed * sin(invertedAngleTheta - pi);
@@ -53,7 +53,7 @@ void MouseEvents::moveAwayFromMouse(SDL_Rect& targetRectangle, int centerX, int 
 		if (distance <= 150)
 		{
 			// Creates a speed that depends on how far/close the cursor is to the center
-			speed = (1 / (.5 * distance)) * multiplier;
+			speed = (1 / (pow(distance, 2))) * multiplier;
 			// Apply opposite quadrant stuff
 			 
 			xSpeed = speed * sin(invertedAngleTheta - 3 * pi / 2);
@@ -76,7 +76,7 @@ void MouseEvents::moveAwayFromMouse(SDL_Rect& targetRectangle, int centerX, int 
 		if (distance <= 150)
 		{
 			// Creates a speed that depends on how far/close the cursor is to the center
-			speed = (1 / (.5 * distance)) * multiplier;
+			speed = (1 / (pow(distance, 2))) * multiplier;
 
 			xSpeed = speed * cos(invertedAngleTheta);
 			ySpeed = -(speed * sin(invertedAngleTheta));
@@ -97,13 +97,12 @@ void MouseEvents::moveAwayFromMouse(SDL_Rect& targetRectangle, int centerX, int 
 		if (distance <= 150)
 		{
 			// Creates a speed that depends on how far/close the cursor is to the center
-			speed = (1 / (.5 * distance)) * multiplier;
+			speed = (1 / (pow(distance, 2))) * multiplier;
 
 			xSpeed = round(-speed * sin(invertedAngleTheta - pi / 2));
 			ySpeed = round(- (speed * cos(invertedAngleTheta - pi / 2)));
 			
-		}
-		
+		}		
 		
 	}
 
@@ -117,6 +116,7 @@ void MouseEvents::moveAwayFromMouse(SDL_Rect& targetRectangle, int centerX, int 
 		targetRectangle.y += (int)ySpeed;
 		ySpeed = 0;
 	}
+
 	printf("Distance: %f, Angle: %f rad", distance, angleTheta);
 	printf(" | The opposite angle: %f | ", invertedAngleTheta);
 	printf("The speed: %f | ", speed);

@@ -33,5 +33,5 @@ private:
 	// Angle opposite to the position
 	float invertedAngleTheta;
 	// Multiplier to amplify move speed
-	float multiplier = 120;
+	float multiplier = 15000;
 };

@@ -145,14 +145,21 @@
     <ClCompile Include="FpsTimer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="RenderWindow.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsTimer.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="Obstacle.h" />
     <ClInclude Include="RenderWindow.h" />
     <ClInclude Include="Texture.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\MinecraftHeart.png" />
+    <Image Include="Assets\Rock.png" />
+    <Image Include="Assets\Rocky.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

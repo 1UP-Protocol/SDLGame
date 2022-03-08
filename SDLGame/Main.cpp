@@ -5,13 +5,18 @@
 #include "Texture.h"
 #include "Mouse.h"
 #include <cmath>
+#include "Obstacle.h"
+#include <random>
+#include <vector>
 
 const int screenWidth = 720;
 const int screenHeight = 600;
 RenderWindow gWindow("My SDL Game", screenWidth, screenHeight);
-Texture heart;
+Texture heart = {0, 0, 32, 32};
 SDL_Rect rectangle = { 150, 150, 50, 50 };
 MouseEvents mouse;
+Texture rockTexture = { 500, 200, 64, 64 };
+
 
 void quit();
 bool init();
@@ -19,6 +24,30 @@ void movingDVD(SDL_Rect& rectangle);
 void rectMouseMovement(SDL_Rect& targetRectangle, int xMousePos, int yMousePos);
 void setBorder(SDL_Rect& targetRect);
 void drawCircleAroundPoint(int centerX, int centerY, int radius);
+std::vector<Obstacle> obstaclesVector;
+
+void createEnemies(int number)
+{
+	std::random_device seed;
+	std::mt19937 rng(seed());
+	std::uniform_int_distribution<int> xDist(200, screenWidth - 32);
+	std::uniform_int_distribution<int> yDist(0, screenHeight - 32);
+
+	for (int i = 0; i < number; i++)
+	{		
+		Obstacle tempObstacle = { xDist(rng), yDist(rng), 3, 32, 32, rockTexture, gWindow.getRenderer()};
+		obstaclesVector.push_back(tempObstacle);
+	}
+
+}
+
+void drawEnemies(std::vector<Obstacle> enemyContainer)
+{
+	for ( Obstacle e : enemyContainer)
+	{
+		e.draw();
+	}
+}
 
 int main(int args, char* argv[]) {
 
@@ -29,6 +58,9 @@ int main(int args, char* argv[]) {
 	bool gameRunning = true;
 	if (init())
 	{
+		
+		Obstacle rockObstacle = { 400, 200, 5, 100, 100, rockTexture, gWindow.getRenderer() };
+		createEnemies(9);
 		// Enter Main Game Loop
 		while (gameRunning)
 		{
@@ -49,7 +81,8 @@ int main(int args, char* argv[]) {
 			// Geometry End here ================================================
 
 			heart.renderTexture(gWindow.getRenderer());
-			
+			rockObstacle.draw();
+			drawEnemies(obstaclesVector);
 			// Draw a dot
 			SDL_SetRenderDrawColor(gWindow.getRenderer(), 255, 0, 0, 255);
 			SDL_RenderDrawPoint(gWindow.getRenderer(), rectangle.x + (rectangle.w / 2), rectangle.y + (rectangle.h / 2));
@@ -100,7 +133,8 @@ bool init()
 
 	if (!heart.loadTexture("Assets/MinecraftHeart.png", gWindow.getRenderer()))
 		return false;
-
+	if (!rockTexture.loadTexture("Assets/Rocky.png", gWindow.getRenderer()))
+		return false;
 	return true;
 }
 int moveSpeedDVD = 1;

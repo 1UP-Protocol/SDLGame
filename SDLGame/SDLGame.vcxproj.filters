@@ -30,6 +30,9 @@
     <ClCompile Include="FpsTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RenderWindow.h">
@@ -44,5 +47,19 @@
     <ClInclude Include="FpsTimer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\MinecraftHeart.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Rock.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Rocky.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

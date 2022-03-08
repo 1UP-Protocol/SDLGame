@@ -1,14 +1,11 @@
 #include "Texture.h"
 
-Texture::Texture()
-:
-	useSource(false)
+Texture::Texture(int x, int y, int width, int height)
+:	x(x), y(y), width(width), height(height), useSource(false)
 {
-
-	destination.x = 0;
-	destination.y = 0;
-	destination.w = 64;
-	destination.h = 55;
+	destination.w = width;
+	destination.h = height;
+	setPosition(x, y);
 }
 
 bool Texture::loadTexture(const char* path, SDL_Renderer* renderer) {
@@ -30,6 +27,12 @@ void Texture::createSourceRectangle(int x, int y, int w, int h)
 	source.h = h;
 
 	useSource = true;
+}
+
+void Texture::setPosition(int xPos, int yPos)
+{
+	destination.x = xPos;
+	destination.y = yPos;
 }
 
 SDL_Rect Texture::getDestinationRect()

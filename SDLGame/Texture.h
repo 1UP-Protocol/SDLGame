@@ -6,17 +6,21 @@
 class Texture {
 
 public:
-	Texture();
+	
+	Texture(int x, int y, int width, int height);
 	bool loadTexture(const char* path, SDL_Renderer* renderer);
 	void renderTexture(SDL_Renderer* renderer);
 	void createSourceRectangle(int x, int y, int w, int h);
-
+	void setPosition(int xPos, int yPos);
 	SDL_Rect getDestinationRect();
-private:
 
+private:
+	int x;
+	int y;
+	int width;
+	int height;
 	SDL_Texture* texture;
 	SDL_Rect source;
 	SDL_Rect destination;
-
 	bool useSource;
 };
