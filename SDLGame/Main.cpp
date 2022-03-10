@@ -16,7 +16,7 @@ Texture heart = {0, 0, 32, 32};
 SDL_Rect rectangle = { 150, 150, 50, 50 };
 MouseEvents mouse;
 Texture rockTexture = { 500, 200, 64, 64 };
-
+bool collision;
 
 void quit();
 bool init();
@@ -35,7 +35,7 @@ void createEnemies(int number)
 
 	for (int i = 0; i < number; i++)
 	{		
-		Obstacle tempObstacle = { xDist(rng), yDist(rng), 3, 32, 32, rockTexture, gWindow.getRenderer()};
+		Obstacle tempObstacle = { xDist(rng), yDist(rng), 3, rockTexture.getWidth(), rockTexture.getHeight(), rockTexture, gWindow.getRenderer()};
 		obstaclesVector.push_back(tempObstacle);
 	}
 
@@ -43,9 +43,17 @@ void createEnemies(int number)
 
 void drawEnemies(std::vector<Obstacle> enemyContainer)
 {
-	for ( Obstacle e : enemyContainer)
+	for ( Obstacle& e : enemyContainer)
 	{
 		e.draw();
+	}
+}
+
+void checkCollision(std::vector<Obstacle> enemyVector, SDL_Rect& targetRect)
+{
+	for (Obstacle& e : enemyVector)
+	{
+		collision = e.collided(targetRect);
 	}
 }
 
@@ -59,8 +67,8 @@ int main(int args, char* argv[]) {
 	if (init())
 	{
 		
-		Obstacle rockObstacle = { 400, 200, 5, 100, 100, rockTexture, gWindow.getRenderer() };
-		createEnemies(9);
+		
+		createEnemies(7);
 		// Enter Main Game Loop
 		while (gameRunning)
 		{
@@ -81,8 +89,8 @@ int main(int args, char* argv[]) {
 			// Geometry End here ================================================
 
 			heart.renderTexture(gWindow.getRenderer());
-			rockObstacle.draw();
 			drawEnemies(obstaclesVector);
+			checkCollision(obstaclesVector, rectangle);
 			// Draw a dot
 			SDL_SetRenderDrawColor(gWindow.getRenderer(), 255, 0, 0, 255);
 			SDL_RenderDrawPoint(gWindow.getRenderer(), rectangle.x + (rectangle.w / 2), rectangle.y + (rectangle.h / 2));
@@ -90,6 +98,7 @@ int main(int args, char* argv[]) {
 
 			drawCircleAroundPoint(rectangle.x + (rectangle.w / 2), rectangle.y + (rectangle.h / 2), 150);
 			drawCircleAroundPoint(rectangle.x + (rectangle.w / 2), rectangle.y + (rectangle.h / 2), 5);
+
 			// Display Screen THIS GOES LAST SO EVERYTHING THAT SHOULD BE RENDERED ON SCREEN GOES ON TOP OF THIS!!11!!!!
 			gWindow.setColor(0, 0, 0, 255);
 			gWindow.Present();

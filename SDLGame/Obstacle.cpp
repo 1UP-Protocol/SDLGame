@@ -16,3 +16,31 @@ void Obstacle::draw() {
 void Obstacle::move(int x, int y) {
 	texture.setPosition(x, y);
 }
+
+int i = 1;
+bool Obstacle::collided(SDL_Rect& targetRect)
+{
+	
+	if (x + 5 < (targetRect.x + targetRect.w) && (y + 8 < (targetRect.y + targetRect.h)) && ((x + width - 5) > targetRect.x) && ((y + height - 8) > targetRect.y))
+	{
+		printf("Collision!\n%d", i);
+		i++;
+		return true;
+	}
+	
+	else {
+		return false;
+	}
+	
+
+}
+
+int Obstacle::getWidth() const
+{
+	return width;
+}
+
+int Obstacle::getHeight() const
+{
+	return height;
+}

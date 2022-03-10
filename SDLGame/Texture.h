@@ -13,6 +13,8 @@ public:
 	void createSourceRectangle(int x, int y, int w, int h);
 	void setPosition(int xPos, int yPos);
 	SDL_Rect getDestinationRect();
+	int getWidth() const;
+	int getHeight() const;
 
 private:
 	int x;

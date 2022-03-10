@@ -40,6 +40,16 @@ SDL_Rect Texture::getDestinationRect()
 	return destination;
 }
 
+int Texture::getWidth() const
+{
+	return width;
+}
+
+int Texture::getHeight() const
+{
+	return height;
+}
+
 
 void Texture::renderTexture(SDL_Renderer* renderer) {
 

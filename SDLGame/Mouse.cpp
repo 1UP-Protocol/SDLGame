@@ -117,10 +117,10 @@ void MouseEvents::moveAwayFromMouse(SDL_Rect& targetRectangle, int centerX, int 
 		ySpeed = 0;
 	}
 
-	printf("Distance: %f, Angle: %f rad", distance, angleTheta);
+	/*printf("Distance: %f, Angle: %f rad", distance, angleTheta);
 	printf(" | The opposite angle: %f | ", invertedAngleTheta);
 	printf("The speed: %f | ", speed);
-	printf("x: %f, y: %f\n", xSpeed, ySpeed);
+	printf("x: %f, y: %f\n", xSpeed, ySpeed);*/
 	// Move the Rectangle
 	
 }
